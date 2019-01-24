@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Serverless</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Serverless</h1>
+				</section>
+
+				<section>
+					<h1>👋</h1>
+					<h3>Tal Bereznitskey</h3>
+					<ul>
+						<li><div style="display: flex; align-items: center;">Co-founder and CTO at <img src="./images/Torii_logo_white.png" height="100" style="margin: 15px;border: none;"/> <small>(<a href="https://toriihq.com">toriihq.com</a>)</small></div></li>
+						<li>Previous: Bizzabo, Checkpoint</li>
+						<li>Coding since age of 6</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 style="text-align: left; text-transform: none; font-weight: 400">
+						Running
+						<br/>
+						Highly Available
+						<br/>
+						Large Scale
+						<br/>
+						Systems Is a Lot of Work
+					</h2>
+				</section>
+
+				<section>
+					<img src="images/roadmap2.jpg" />
+				</section>
+
+				<section>
+					<h2>What is Serverless</h2>
+					<blockquote>Serverless allows you to build and run applications and services without thinking about servers</blockquote>
+				</section>
+				
+				<section>
+					<h3>EXAMPLE: S3</h3>
+					<ul>
+						<li class="fragment fade-in">How many file servers do you have?</li>
+						<li class="fragment fade-in">What is the CPU/Memory size of each server?</li>
+						<li class="fragment fade-in">How do you handle high traffic?</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Serverless vs. Managed</h3>
+					<p class="fragment fade-in">Is RDS serverless?</p>
+					<p class="fragment fade-in">
+						<small>RDS is not serverless ⛔️</small>
+						<img src="images/rds.png" />
+					</p>
+				</section>
+
+				<section>
+					<h3>Serverless Features</h3>
+					<ul>
+						<li>High availability</li>
+						<li>Scales from 0 to Infinity</li>
+						<li>Pay per use</li>
+						<li>No server management</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Function as a Service - AWS Lambda</h3>
+					<pre style="display:none;"><code data-trim data-noescape>
+exports.myHandler = (event, context, callback) => {
+... your amazing code ...
+
+callback(null, { all: 'good' })
+}</code></pre>
+					<img src="images/code.png" style="border: none;" />
+				</section>
+
+				<section>
+					<h1>DEMO TIME</h1>
+					<h1>👩‍💻👨‍💻</h1>
+				</section>
+
+				<section>
+					<h3>Serverless Frameworks</h3>
+					<img src="images/serverless_sam.png" height="200" />
+					<img src="images/serverless.png" height="200"  />
+					<img src="images/serverless_apex.png" height="200"  />
+				</section>
+
+				<section>
+					<h3>What just happened?</h3>
+					<img src="images/lifecycle.png" />
+				</section>
+
+				<section>
+					<h3>API Server</h3>
+					<p>A good match for FaaS</p>
+					<p class="fragment fade-in"><small>HTTP Request in, HTTP response out</small></p>
+					<p class="fragment fade-in"><small>Need a friend: AWS Gateway</small></p>
+				</section>
+
+				<section>
+					<h1>DEMO TIME</h1>
+					<h1>🤖</h1>
+				</section>
+
+				<section>
+					<h1>Power to the devs</h1>
+					<p>Use it for your next side project</p>
+					<p>Use it in a small work project</p>
+					<p>Build your startup on it</p>
+				</section>
+
+				<section>
+					<h3>Serverless @Torii</h3>
+					<p>We're 100% serverless</p>
+					<blockquote>API Server(s)</blockquote>
+					<blockquote>Background jobs</blockquote>
+				</section>
+
+				<section>
+					<h1>THE GOOD PARTS 👍</h1>
+				</section>
+
+				<section>
+					<h3>Deployment Best Practices</h3>
+					<ol>
+						<li>Zero downtime</li>
+						<li>Versioning</li>
+						<li>Aliases</li>
+						<li>Instant Rollbacks</li>
+						<li>Infinite environments</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>No-ops</h3>
+					<p>Things we don't do:</p>
+					<ul>
+						<li>Write scripts</li>
+						<li>Configure Nginx</li>
+						<li>Patch Linux</li>
+						<li>Craft Dockerfiles</li>
+						<li>Debug high CPU</li>
+						<li>Worry about scale</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Auto scaling, up and down</h3>
+					<p class="fragment fade-in"><small>(all the way to 0)</small></p>
+				</section>
+
+				<section>
+					<h3>Cost</h3>
+					<table>
+						<thead>
+							<th>Option</th>
+							<th>Cost per hour</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Lambda (512 MB)</td>
+								<td>$0.03</td>
+							</tr>
+							<tr>
+								<td>EC2 (512 MB)</td>
+								<td>$0.0052</td>
+							</tr>
+							<tr class="fragment fade-in">
+								<td>EC2 (512 MB) + devops time</td>
+								<td>🤑🤑🤑</td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="fragment fade-in">
+						<small>(Cost depends on idleness)</small>
+					</p>
+				</section>
+
+				<section>
+					<h3>Security</h3>
+					<p>Automatic OS and runtime security patches</p>
+					<p>Permissions per function</p>
+					<p>Short living "servers"</p>
+				</section>
+
+				<section>
+					<h3>Actively Improving</h3>
+					<p>Since we started</p>
+					<ul>
+						<li>30 seconds 👉 5 mins 👉 15 mins</li>
+						<li>Node v6 👉 Node v8 👉 any version</li>
+						<li>Lambda @edge</li>
+						<li>Websockets support</li>
+					</ul>
+					<p class="fragment fade-in">Since most infra is on AWS, it keeps improving</p>
+				</section>
+
+				<section>
+					<h1>CHALLANGES 🤔</h1>
+				</section>
+
+				<section>
+					<h3>Limits</h3>
+					<p>15 minute max run time</p>
+					<p>30 seconds for API Gateway responses</p>
+					<p>No persistent file system</p>
+				</section>
+
+				<section>
+					<h3>Performance - Cold starts</h3>
+					<img src="images/coldstarts.png" />
+				</section>
+
+				<section>
+					<h3>Other challenges</h3>
+					<ul>
+						<li>Local Development</li>
+						<li>DB Connection Pools</li>
+						<li>Latency</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>Questions?</h1>
+				</section>
+
+				<section>
+					<h3>Tal Bereznitskey</h3>
+					<ul>
+						<li><strong>Works</strong>: Founder and CTO at Torii (toriihq.com)</li>
+						<li><strong>Codes</strong>: github.com/berzniz</li>
+						<li><strong>Tweets</strong>: @ketacode</li>
+						<li><strong>Writes</strong>: medium.com/ketacode, berzniz.com, ketacode.com</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			Reveal.initialize({
+				history: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
