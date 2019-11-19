@@ -20,238 +20,384 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style>
+			.dimmer {
+				background: rgba(34,34,34,0.9);
+				padding: 30px !important;
+				border-radius: 4px;
+			}
+			.fragment.visible {
+				opacity: 0.5 !important;
+			}
+			.fragment.visible.current-fragment {
+				opacity: 1 !important;
+			}
+
+			.fragment.visible span {
+				transition: color .2s;
+				color: white;
+			}
+
+			.color1,
+			.fragment.visible.current-fragment span.color1 {
+				color: #e4af3c;
+			}
+			.color2,
+			.fragment.visible.current-fragment span.color2 {
+				color: #3cafe4;
+			}
+			.color3,
+			.fragment.visible.current-fragment span.color3 {
+				color: #e43caf;
+			}
+			.color4,
+			.fragment.visible.current-fragment span.color4 {
+				color: #3ce4af;
+			}
+
+			.hljs {
+				background-color: #283238;
+				padding: 30px !important;
+			}
+
+			.reveal pre {
+				background-color: #283238;
+				width: 100%;
+				font-size: 30px;
+				padding: 30px !important;
+			}
+
+			.lesser,
+			.fragment.visible span {
+				color: #777;
+			}
+		</style>
+
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Serverless</h1>
+					<h2>Serverless Lessons</h2>
+					<p>Running a startup 100% on Serverless</p>
+
+					<aside class="notes">
+						- When I was a kid, I really liked programming.
+						- I would create computer games, and play them all night.
+						- Once in a while, I'd create an interesting game — so I would copy it onto a floppy disc and ride my bike
+						to a friends house. We would play these games together for hours.
+						- I really enjoyed creating something and seeing someone else uses it.
+						- That is still what excites me most today about programming — but today, it comes with other responsibilities as well:
+						- Keeping the software up at all times, and making sure more and more users can access it.
+						- That's why I'm excited about serverless. It allows me to focus on building software, rather than on operating it.
+
+						- And today I'd like to tell you about how we use serverless at our startup, and the lessons we've learned along the way.
+					</aside>
 				</section>
 
 				<section>
-					<h1>👋</h1>
 					<h3>Tal Bereznitskey</h3>
-					<ul>
-						<li><div style="display: flex; align-items: center;">Co-founder and CTO at <img src="./images/Torii_logo_white.png" height="100" style="margin: 15px;border: none;"/> <small>(<a href="https://toriihq.com">toriihq.com</a>)</small></div></li>
-						<li>Previous: Bizzabo, Checkpoint</li>
-						<li>Coding since age of 6</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2 style="text-align: left; text-transform: none; font-weight: 400">
-						Running
-						<br/>
-						Highly Available
-						<br/>
-						Large Scale
-						<br/>
-						Systems Is a Lot of Work
-					</h2>
-				</section>
-
-				<section>
-					<img src="images/roadmap2.jpg" />
-				</section>
-
-				<section>
-					<h2>What is Serverless</h2>
-					<blockquote>Serverless allows you to build and run applications and services without thinking about servers</blockquote>
-				</section>
-				
-				<section>
-					<h3>EXAMPLE: S3</h3>
-					<ul>
-						<li class="fragment fade-in">How many file servers do you have?</li>
-						<li class="fragment fade-in">What is the CPU/Memory size of each server?</li>
-						<li class="fragment fade-in">How do you handle high traffic?</li>
-					</ul>
-				</section>
-				
-				<section>
-					<h3>Serverless vs. Managed</h3>
-					<p class="fragment fade-in">Is RDS serverless?</p>
-					<p class="fragment fade-in">
-						<small>RDS is not serverless ⛔️</small>
-						<img src="images/rds.png" />
+					<p>
+						Co-Founder and CTO
 					</p>
+						<img src="./images/Torii_logo_white.png" height="200" style="margin: 15px;border: none;"/>
+						<p class="fragment">SaaS Management Platform</p>
+						<p class="fragment">built entirely on serverless</p>
+					<aside class="notes">
+						And before we talk about you, let's talk about me
+					</aside>
 				</section>
 
 				<section>
-					<h3>Serverless Features</h3>
-					<ul>
-						<li>High availability</li>
+					<h1>🤖</h1>
+					<h2>1 Minute Slack bot</h2>
+					<aside class="notes">
+						So, before we talk about serverless, let's do something fun
+					</aside>
+				</section>
+				<section>
+					<h3>Code - the upper-bot</h3>
+	<pre><code data-trim data-noescape><span class="lesser">const app = require('<span class="color2">express</span>')</span>
+
+<span class="lesser">app.get('/', (req, res) => {</span>
+  const { <span class="color4">text</span> = '' } = req.query
+  const <span class="color1">uppercase</span> = <span class="color4">text</span>.toUpperCase()
+  res.send('Your uppercase text is ' + <span class="color1">uppercase</span>)
+<span class="lesser">})</span>
+
+<span class="lesser">app.listen(process.env.PORT)</span></code></pre>
+					<img src="images/slackbot_code.png" style="border: none; background: transparent; box-shadow: none; display: none;" />
+				</section>
+				<section>
+					<h3>Deploy</h3>
+					<!-- <div style="height: 450px"> -->
+						<!-- <img src="images/up_code.png" style="border: none; background: transparent; box-shadow: none;" /> -->
+					<!-- </div> -->
+					<pre><code data-trim data-noescape>
+$ <span class="fragment">up</span>
+
+<div class="fragment" style="color: #aaa;">build: 175 files, 7.4 MB (<span class="color4">662ms</span>)
+deploy: staging (commit c6f180c) (<span class="color4">25.522s</span>)
+stack: complete (<span class="color4">14.198s</span>)
+endpoint: <span class="color1">https://2ab05.execute-api.us-east-1.amazonaws.com/staging/</span></div>
+</code></pre>
+				</section>
+	
+				<section>
+					<h3>Test</h3>
+	<pre><code data-trim data-noescape>$ <span class="fragment"><span class="lesser">curl https://...amazonaws.com/</span>?text=<span class="color1">command-line-test</span></span>
+	<div class="fragment">Your uppercase text is <span class="color1">COMMAND-LINE-TEST</span></div>
+	</code></pre>
+				</section>
+
+				<section>
+					<h3>Configure Slack</h3>
+					<div style="height: 450px">
+						<p><img src="images/slack_config.png" style="border: none" /></p>
+					</div>
+				</section>
+				<section>
+					<h3>Result</h3>
+					<p><img src="images/slackbot.gif" style="border: none; width: 100%;" /></p>
+				</section>
+
+				<section>
+					<h1>What just happened?</h1>
+					<aside class="notes">
+						We just deployed a serverless application, and that was pretty simple. Think about teaching your kid to deploy apps like that. That's just awesome.
+					</aside>
+				</section>
+
+				<section>
+					<h3>up</h3>
+					<img src='images/up.png' style="border: none; background: transparent; max-width: 80%;" />
+				</section>
+
+				<section>
+					<h2>What did we get?</h2>
+					<ol>
+						<li><span class="color4">Highly available</span> Slack bot</li>
 						<li>Scales from 0 to Infinity</li>
 						<li>Pay per use</li>
 						<li>No server management</li>
-					</ul>
+						<li class="fragment">Awesome <span class="color2">Developer Experience</span>!</li>
+					</ol>
+					<aside class="notes">
+						This is the essence of Serverless. An amazing result with very little effort or knowledge on our side
+					</aside>
+				</section>
+
+<!-- 				<section>
+					<h1>👏</h1>
+					<h1>Pause for applause</h1>
+				</section>
+ -->
+<!-- 				<section>
+					<h2>What is Serverless?</h2>
+					<p>Serverless allows us to build and run applications and services <span class="color1">without thinking about servers</span></p>
+				</section>
+ -->
+				<section>
+					<h1>🆒</h1>
+					<h3>but can <span class="color4">serverless</span> be used for “<span class="color4">real</span>” work ?</h3>
+					<aside class="notes">
+						Now you're probably thinking, cool...
+					</aside>
 				</section>
 
 				<section>
-					<h3>Function as a Service - AWS Lambda</h3>
-					<img src="images/code.png" style="border: none;" />
+					<h2>Will <span class="color4">serverless</span> work for our startup?</h2>
+					<aside class="notes">
+						This is the question me and my co-founders asked our selves when we started out 3 years ago.
+
+						Could we take the benefits of serverless we've just seen - and apply them to our startup?
+					</aside>
 				</section>
 
 				<section>
-					<h1>DEMO TIME</h1>
-					<h1>👩‍💻👨‍💻</h1>
-					<small><a href="https://github.com/berzniz/serverless_slides/tree/master/demos/apex_demo">See demo code</a></small>
+					<h2>Why choose serverless?</h2>
+					<p class="fragment">Minimum ops</p>
+					<p class="fragment">Focus on <u><span class="color4">delivering more value</span></u></p>
+					<p class="fragment">Advantage over competition</p>
+					<p class="fragment">Win</p>
+  				<p class="fragment">... while <span class="color2">sleeping better</span> at night</p>
+					<aside class="notes">
+						So before that: why to even choose serverless? our hypothesys was
+					</aside>
 				</section>
 
 				<section>
-					<h3>Serverless Frameworks</h3>
-					<img src="images/serverless_sam.png" height="200" />
-					<img src="images/serverless.png" height="200"  />
-					<img src="images/serverless_apex.png" height="200"  />
+					<h2>Serverless @ Torii</h2>
+					<p>API Server(s)</p>
+					<p>Background jobs</p>
+					<p>Static content</p>
+					<aside class="notes">
+						So it felt like the right thing to do. We always knew we can fall back to servers if it doesn't work out so well.
+					</aside>
 				</section>
 
 				<section>
-					<h3>What just happened?</h3>
-					<img src="images/lifecycle.png" />
+					<h1>👨‍🏫</h1>
+					<h1>LESSONS LEARNED</h1>
+					<aside class="notes">
+						We've been running fully on serverless, and we learned where it shines, but also faced some challanges.
+						Here are a few lessons we've learned. I am not going to talk about costs, as we care more about moving faster than optimizing costs - but it is an interesting topic.
+					</aside>
 				</section>
 
 				<section>
-					<h3>API Server</h3>
-					<p>A good match for FaaS</p>
-					<p class="fragment fade-in"><small>HTTP Request in, HTTP response out</small></p>
-					<p class="fragment fade-in"><small>Need a friend: AWS Gateway</small></p>
-				</section>
-
-				<section>
-					<h1>DEMO TIME</h1>
-					<h1>🤖</h1>
-					<small><a href="https://github.com/berzniz/serverless_slides/tree/master/demos/up_demo">See demo code</a></small>
-				</section>
-
-				<section>
-					<h1>Power to the devs</h1>
-					<p>Use it for your next side project</p>
-					<p>Use it in a small work project</p>
-					<p>Build your startup on it</p>
-				</section>
-
-				<section>
-					<h3>Serverless @Torii</h3>
-					<p>We're 100% serverless</p>
-					<blockquote>API Server(s)</blockquote>
-					<blockquote>Background jobs</blockquote>
-				</section>
-
-				<section>
-					<h1>THE GOOD PARTS 👍</h1>
-				</section>
-
-				<section>
-					<h3>Deployment Best Practices</h3>
+					<h3>Best Practices Out-Of-The-📦</h3>
 					<ol>
-						<li>Zero downtime</li>
-						<li>Versioning</li>
-						<li>Aliases</li>
-						<li>Instant Rollbacks</li>
-						<li>Infinite environments</li>
+						<li class="fragment">Immutability</li>
+						<li class="fragment">Versioning</li>
+						<li class="fragment">Aliases</li>
+						<li class="fragment">Zero downtime deployments</li>
+						<li class="fragment">Instant Rollbacks</li>
 					</ol>
 				</section>
 
 				<section>
-					<h3>No-ops</h3>
-					<p>Things we don't do:</p>
-					<ul>
-						<li>Write scripts</li>
-						<li>Configure Nginx</li>
-						<li>Patch Linux</li>
-						<li>Craft Dockerfiles</li>
-						<li>Debug high CPU</li>
-						<li>Worry about scale</li>
-					</ul>
+					<h3>Infrastructure-as-Code</h3>
+					<p>Friendly tools, even I can do it...</p>
+					<!-- <img src="images/serverless.yml.png" style="border: none; background: white; border-radius: 5px" /> -->
+					<pre class="fragment"><code data-trim data-noescape>
+service: <span class="color1">scheduled-cron-example</span>
+
+functions:
+  cron:
+    handler: <span class="color4">index.handler</span>
+    events:
+      # Invoke Lambda function every minute
+      - schedule: <span class="color3">rate(1 minute)</span></code></pre>
+					<aside class="notes">
+						When you choose serverless, you will usually also start using infrastructure-as-code. This is not the
+						scarry terraform or cloudformation, these tools were made for developers. not ops, not dev-ops people, but for plain developers.
+					</aside>
 				</section>
 
-				<section>
-					<h3>Auto scaling, up and down</h3>
-					<p class="fragment fade-in"><small>(all the way to 0)</small></p>
+<!-- 				<section>
+					<h3><span class="color4">Effortless</span> Scaling</h3>
+					<p>Story time:<br/>“The day we served x1000 requests”</p>
+					<aside class="notes">
+						Early days at Torii. One of the developers complained that the logs are showing too many lines and he can't keep up. What actually happened is that one of our first customers deployed our solution cross company without telling us. We didn't notice it. We now monitor for that, but that was being taken care of automatically.
+					</aside>
 				</section>
-
+ -->
 				<section>
-					<h3>Cost</h3>
-					<table>
-						<thead>
-							<th>Option</th>
-							<th>Cost per hour</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Lambda (512 MB)</td>
-								<td>$0.03</td>
-							</tr>
-							<tr>
-								<td>EC2 (512 MB)</td>
-								<td>$0.0052</td>
-							</tr>
-							<tr class="fragment fade-in">
-								<td>EC2 (512 MB) + devops time</td>
-								<td>🤑🤑🤑</td>
-							</tr>
-						</tbody>
-					</table>
-					<p class="fragment fade-in">
-						<small>(Cost depends on idleness)</small>
+					<h3>Better <span class="color1">Security</span></h3>
+					<p class="fragment">Automatic OS and runtime security patches</p>
+					<p class="fragment">Permissions per function</p>
+					<p class="fragment"><del>SSH</del> is dead, less attack vectors</p>
+					<p class="fragment">Easier certification<br/>
+						<img src='images/soc2.png' style="border: none; background: transparent;" width="150"/>
 					</p>
 				</section>
 
-				<section>
-					<h3>Security</h3>
-					<p>Automatic OS and runtime security patches</p>
-					<p>Permissions per function</p>
-					<p>Short living "servers"</p>
-				</section>
-
-				<section>
-					<h3>Actively Improving</h3>
-					<p>Since we started</p>
+<!-- 				<section>
+					<h3>Pushing to the limits</h3>
+					<p>Can all use cases be solved with serverless?</p>
+					<p class="fragment">So far, so good</p>
 					<ul>
-						<li>30 seconds 👉 5 mins 👉 15 mins</li>
-						<li>Node v6 👉 Node v8 👉 any version</li>
-						<li>Lambda @edge</li>
-						<li>Websockets support</li>
+						<li class="fragment">Headless Chrome</li>
+						<li class="fragment">Long data processing</li>
+						<li class="fragment">Full API server</li>
 					</ul>
-					<p class="fragment fade-in">Since most infra is on AWS, it keeps improving</p>
 				</section>
+ -->
 
-				<section>
-					<h1>CHALLANGES 🤔</h1>
-				</section>
-
-				<section>
+ 				<section>
 					<h3>Limits</h3>
-					<p>15 minute max run time</p>
-					<p>30 seconds for API Gateway responses</p>
-					<p>No persistent file system</p>
+					<p><span class="fragment">15 minute max run time.</span> <span class="color4 fragment">Recursive invocations.</span></p>
+					<p><span class="fragment">30 sec max API Gateway responses.</span> <span class="color4 fragment">Decoupled invocation.</span></p>
+					<p><span class="fragment">No persistent servers, websockets, polling.</span> <span class="color4 fragment">There's a service for that.</span></p>
 				</section>
 
 				<section>
 					<h3>Performance - Cold starts</h3>
-					<img src="images/coldstarts.png" />
+					<img class="fragment" src="images/coldstarts.png" style="max-width: 80%;" />
 				</section>
 
+<!-- 				<section>
+					<h3>Performance - Bundling</h3>
+					<img src="images/node_modules.png" style="max-width: 60%;" />
+				</section>
+ -->
 				<section>
-					<h3>Other challenges</h3>
+					<h3>Optimizing Functions</h3>
+					<p>A <span class="color1">lambda</span> function is <span class="color4">similar to a website</span></p>
 					<ul>
-						<li>Local Development</li>
-						<li>DB Connection Pools</li>
-						<li>Latency</li>
+						<li class="fragment">Bundle using Webpack</li>
+						<li class="fragment">Remove useless files</li>
+						<li class="fragment">Bundle + Remove</li>
+						<li class="fragment">Lazy load code</li>
+						<li class="fragment">Open source:<br> <a href="https://github.com/zeit/ncc">ncc</a>, <a href="https://github.com/zeit/pkg">pkg</a>, <a href="https://github.com/toriihq/lambdapack">lambdapack</a></li>
 					</ul>
 				</section>
 
 				<section>
-					<h1>Questions?</h1>
+					<h3>Performance - Latency</h3>
+					<img class="fragment" src="images/trip.jpg" />
+				</section>
+
+				<section>
+					<h3>Scaling</h3>
+					<p>Functions can scale, can the rest keep up?</p>
+					<p class="fragment"><span class="color3">Limit concurrency</span></p>
+				</section>
+
+				<section>
+					<h3>One Function vs. Many</h3>
+					<p class="fragment"><span class="color2">Many small functions</span> or just <span class="color4">a large one</span>?</p>
+					<p class="fragment">API servers are better as <span class="color4">one large function</span></p>
+					<p class="fragment">Less <span class="color4">cold starts</span>, easier to <span class="color4">deploy</span> and <span class="color4">test</span></p>
+				</section>
+
+				<section>
+					<h3>Secrets</h3>
+					<p class="fragment">AWS Systems Manager Parameter Store (SSM)</p>
+					<p><span class="fragment">Decrypt at runtime.</span> <span class="fragment color3">Doesn't scale well.</span></p>
+					<p class="fragment">Bake it during deployment</p>
+				</section>
+
+				<section>
+					<h3>Logging</h3>
+					<p>Loggers were intended for always running servers</p>
+					<p class="fragment">Who ❤️ CloudWatch?</p>
+					<p class="fragment">Lambda 👉 CloudWatch 👉 Lambda 👉 Papertrail</p>
+					<aside class="notes">
+						Some require agents to run on the server. Some don't have a way to stop. Some will slow down the end of the lambda since they will flush extra info.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Actively Improving</h3>
+					<p><span class="color1">We're just at the beginning</span></p>
+					<p class="fragment">Cloud providers are investing a lot in serverless</p>
+					<p class="fragment">Since most infra is on AWS, it keeps improving</p>
+					<ul class="fragment">
+						<li>30 seconds 👉 5 mins 👉 15 mins</li>
+						<li>Node v6 👉 Node v8 👉 any version</li>
+						<li>Faster VPN cold starts</li>
+						<li>Websockets, SQS, ALB support</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Is <span class="color4">serverless</span> the future?</h2>
+					<h3 class="fragment">No. It's the <span class="color1">present</span>.</h3>
+					<aside class="notes">
+
+					</aside>
 				</section>
 
 				<section>
 					<h3>Tal Bereznitskey</h3>
 					<ul>
-						<li><strong>Works</strong>: Founder and CTO at Torii (toriihq.com)</li>
-						<li><strong>Codes</strong>: github.com/berzniz</li>
-						<li><strong>Tweets</strong>: @ketacode</li>
-						<li><strong>Writes</strong>: medium.com/ketacode, berzniz.com, ketacode.com</li>
+						<li><strong>Works</strong>: Co-Founder and CTO at <a href="https://toriihq.com">Torii</a></li>
+						<li><strong>Codes</strong>: <a href="https://github.com/berzniz">github.com/berzniz</a></li>
+						<li><strong>Tweets</strong>: <a href="https://twitter.com/ketacode">@ketacode</a></li>
+						<li><strong>Writes</strong>: <br><a href="https://medium.com/ketacode">medium.com/ketacode</a><br><a href="ketacode.com">ketacode.com</a><br><a href="http://berzniz.com">berzniz.com</a></li>
 					</ul>
 				</section>
 
@@ -264,11 +410,13 @@
 		<script>
 			Reveal.initialize({
 				history: true,
+				width: 1280,
+				height: 720,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					// { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
 		</script>
