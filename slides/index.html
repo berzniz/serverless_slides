@@ -81,19 +81,6 @@
 				<section>
 					<h2>Serverless Lessons</h2>
 					<p>Running a startup 100% on Serverless</p>
-
-					<aside class="notes">
-						- When I was a kid, I really liked programming.
-						- I would create computer games, and play them all night.
-						- Once in a while, I'd create an interesting game — so I would copy it onto a floppy disc and ride my bike
-						to a friends house. We would play these games together for hours.
-						- I really enjoyed creating something and seeing someone else uses it.
-						- That is still what excites me most today about programming — but today, it comes with other responsibilities as well:
-						- Keeping the software up at all times, and making sure more and more users can access it.
-						- That's why I'm excited about serverless. It allows me to focus on building software, rather than on operating it.
-
-						- And today I'd like to tell you about how we use serverless at our startup, and the lessons we've learned along the way.
-					</aside>
 				</section>
 
 				<section>
@@ -104,17 +91,11 @@
 						<img src="./images/Torii_logo_white.png" height="200" style="margin: 15px;border: none;"/>
 						<p class="fragment">SaaS Management Platform</p>
 						<p class="fragment">built entirely on serverless</p>
-					<aside class="notes">
-						And before we talk about you, let's talk about me
-					</aside>
 				</section>
 
 				<section>
 					<h1>🤖</h1>
 					<h2>1 Minute Slack bot</h2>
-					<aside class="notes">
-						So, before we talk about serverless, let's do something fun
-					</aside>
 				</section>
 				<section>
 					<h3>Code - the upper-bot</h3>
@@ -164,9 +145,6 @@ endpoint: <span class="color1">https://2ab05.execute-api.us-east-1.amazonaws.com
 
 				<section>
 					<h1>What just happened?</h1>
-					<aside class="notes">
-						We just deployed a serverless application, and that was pretty simple. Think about teaching your kid to deploy apps like that. That's just awesome.
-					</aside>
 				</section>
 
 				<section>
@@ -183,9 +161,6 @@ endpoint: <span class="color1">https://2ab05.execute-api.us-east-1.amazonaws.com
 						<li>No server management</li>
 						<li class="fragment">Awesome <span class="color2">Developer Experience</span>!</li>
 					</ol>
-					<aside class="notes">
-						This is the essence of Serverless. An amazing result with very little effort or knowledge on our side
-					</aside>
 				</section>
 
 <!-- 				<section>
@@ -201,18 +176,10 @@ endpoint: <span class="color1">https://2ab05.execute-api.us-east-1.amazonaws.com
 				<section>
 					<h1>🆒</h1>
 					<h3>but can <span class="color4">serverless</span> be used for “<span class="color4">real</span>” work ?</h3>
-					<aside class="notes">
-						Now you're probably thinking, cool...
-					</aside>
 				</section>
 
 				<section>
 					<h2>Will <span class="color4">serverless</span> work for our startup?</h2>
-					<aside class="notes">
-						This is the question me and my co-founders asked our selves when we started out 3 years ago.
-
-						Could we take the benefits of serverless we've just seen - and apply them to our startup?
-					</aside>
 				</section>
 
 				<section>
@@ -222,9 +189,6 @@ endpoint: <span class="color1">https://2ab05.execute-api.us-east-1.amazonaws.com
 					<p class="fragment">Advantage over competition</p>
 					<p class="fragment">Win</p>
   				<p class="fragment">... while <span class="color2">sleeping better</span> at night</p>
-					<aside class="notes">
-						So before that: why to even choose serverless? our hypothesys was
-					</aside>
 				</section>
 
 				<section>
@@ -232,18 +196,11 @@ endpoint: <span class="color1">https://2ab05.execute-api.us-east-1.amazonaws.com
 					<p>API Server(s)</p>
 					<p>Background jobs</p>
 					<p>Static content</p>
-					<aside class="notes">
-						So it felt like the right thing to do. We always knew we can fall back to servers if it doesn't work out so well.
-					</aside>
 				</section>
 
 				<section>
 					<h1>👨‍🏫</h1>
 					<h1>LESSONS LEARNED</h1>
-					<aside class="notes">
-						We've been running fully on serverless, and we learned where it shines, but also faced some challanges.
-						Here are a few lessons we've learned. I am not going to talk about costs, as we care more about moving faster than optimizing costs - but it is an interesting topic.
-					</aside>
 				</section>
 
 				<section>
@@ -270,18 +227,11 @@ functions:
     events:
       # Invoke Lambda function every minute
       - schedule: <span class="color3">rate(1 minute)</span></code></pre>
-					<aside class="notes">
-						When you choose serverless, you will usually also start using infrastructure-as-code. This is not the
-						scarry terraform or cloudformation, these tools were made for developers. not ops, not dev-ops people, but for plain developers.
-					</aside>
 				</section>
 
 <!-- 				<section>
 					<h3><span class="color4">Effortless</span> Scaling</h3>
 					<p>Story time:<br/>“The day we served x1000 requests”</p>
-					<aside class="notes">
-						Early days at Torii. One of the developers complained that the logs are showing too many lines and he can't keep up. What actually happened is that one of our first customers deployed our solution cross company without telling us. We didn't notice it. We now monitor for that, but that was being taken care of automatically.
-					</aside>
 				</section>
  -->
 				<section>
@@ -365,9 +315,6 @@ functions:
 					<p>Loggers were intended for always running servers</p>
 					<p class="fragment">Who ❤️ CloudWatch?</p>
 					<p class="fragment">Lambda 👉 CloudWatch 👉 Lambda 👉 Papertrail</p>
-					<aside class="notes">
-						Some require agents to run on the server. Some don't have a way to stop. Some will slow down the end of the lambda since they will flush extra info.
-					</aside>
 				</section>
 
 				<section>
@@ -386,9 +333,6 @@ functions:
 				<section>
 					<h2>Is <span class="color4">serverless</span> the future?</h2>
 					<h3 class="fragment">No. It's the <span class="color1">present</span>.</h3>
-					<aside class="notes">
-
-					</aside>
 				</section>
 
 				<section>
